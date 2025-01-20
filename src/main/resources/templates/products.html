@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>상품 목록</title>
+    <link href="/favicon.ico" rel="icon">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<h1>상품 목록</h1>
+<div id="product-container"></div>
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            url: '/api/products',
+            method: 'GET',
+            success:
+                function (products) {
+                $.each(products, function (index,value){
+                    $("#product-container").append(
+                        `<div class="card">
+                            <img src="${value.image}" alt="${value.title}">
+                            <h3>${value.title}</h3>
+                            <p>${value.price}</p>
+                        </div>
+                    `);
+                })
+
+                },
+            error: function () {
+                alert("<p>서버에서 불러오기 실패했습니다.");
+            }
+        });
+    });
+</script>
+</body>
+</html>

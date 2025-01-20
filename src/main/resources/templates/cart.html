@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>장바구니</title>
+    <link href="/favicon.ico" rel="icon">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<h1>장바구니</h1>
+<div id="cart-container" data-user-id="${userId}"></div>
+<script>
+    const userId = new URLSearchParams(window.location.search).get('userId');
+    $.ajax({
+        url: `/api/carts?userId=${userId}`,
+        method: 'GET',
+        success: function (cart) {
+            $.each(cart, function (item, index){
+                $("#cart-container").append(`
+                    <div class="card">
+                        <h3>${index.title}</h3>
+                        <h3>${index.price}</h3>
+                        <h3>${index.quantity}</h3>
+                    </div>
+                `)
+            })
+        },
+        error: function () {
+            alert('장바구니 데이터를 불러올 수 없습니다.');
+        }
+    });
+</script>
+</body>
+</html>
