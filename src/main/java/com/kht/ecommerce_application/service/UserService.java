@@ -6,4 +6,10 @@ import java.util.List;
 
 public interface UserService {
     List<User> getAllUser();
+
+    void insertUser(User user);
+
+    Boolean existByEmail(String email);
+
+    User getUserId(int id);
 }

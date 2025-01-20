@@ -2,8 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kht.ecommerce_application.mapper.UserMapper">
+    <insert id="insertUser">
+        INSERT into users(email, username, password, firstname, lastname, phone, city, street, street_number, zipcode)
+        VALUES(#{email}, #{username}, #{password}, #{firstname}, #{lastname}, #{phone}, #{city}, #{street}, #{streetNumber}, #{zipcode})
+    </insert>
+
+    <select id="existByEmail">
+        SELECT COUNT(*)
+        FROM users
+        WHERE email = #{email}
+    </select>
+
     <select id="getAllUser">
         SELECT id, firstname, lastname, phone
         FROM users
+    </select>
+
+    <select id="getUserId">
+        SELECT id, firstname, lastname, email, phone, address
+        FROM users
+        WHERE id = #{id}
     </select>
 </mapper>

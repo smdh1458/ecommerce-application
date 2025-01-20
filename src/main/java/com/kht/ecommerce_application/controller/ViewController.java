@@ -1,10 +1,18 @@
 package com.kht.ecommerce_application.controller;
 
+import com.kht.ecommerce_application.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 public class ViewController {
+
+    private final UserService userService;
+
+    public ViewController(UserService userService) {
+        this.userService = userService;
+    }
 
     // 사용자 목록 페이지
     @GetMapping("/")
@@ -18,11 +26,36 @@ public class ViewController {
         return "products";
     }
 
-    /*
     // 장바구니 페이지
     @GetMapping("/cart")
     public String cartPage() {
         return "cart";
     }
-     */
+
+    //유저 장바구니 페이지
+    @GetMapping("/cart{userId}")
+    public String getCartByUserId(@PathVariable("userId") int id) {
+        return "cart";
+    }
+
+    // 회원가입 페이지 볼 수 있게 회원가입.html 불러오기
+    @GetMapping("/join")
+    public String joinPage() {
+        return "join";
+    }
+
+    @GetMapping("/products/insert")
+    public String insertProduct() {
+        return "insertProduct";
+    }
+
+    @GetMapping("/user/{id}")
+    public String getUserById(@PathVariable("id") int id) {
+        return "user_detail";
+    }
+
+    @GetMapping("/product/{id}")
+    public String getProductById(@PathVariable("id") int id) {
+        return "product_detail";
+    }
 }
