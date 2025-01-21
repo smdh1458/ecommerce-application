@@ -4,15 +4,10 @@ import com.kht.ecommerce_application.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class ViewController {
-
-    private final UserService userService;
-
-    public ViewController(UserService userService) {
-        this.userService = userService;
-    }
 
     // 사용자 목록 페이지
     @GetMapping("/")
@@ -49,8 +44,8 @@ public class ViewController {
         return "insertProduct";
     }
 
-    @GetMapping("/user/{id}")
-    public String getUserById(@PathVariable("id") int id) {
+    @GetMapping("/users{id}")
+    public String getUserId(@PathVariable("id") int id) {
         return "user_detail";
     }
 

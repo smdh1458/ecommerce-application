@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>제품 추가</title>
+    <link href="/favicon.ico" rel="icon">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <link href="/styles.css" rel="stylesheet">
+</head>
+<body>
+<h1>제품 추가</h1>
+<form id="product-form">
+    <label for="title">제목:</label>
+    <input type="text" id="title" name="title" required>
+
+    <label for="price">가격:</label>
+    <input type="number" id="price" name="price" required>
+
+    <label for="description">설명:</label>
+    <textarea id="description" name="description" required></textarea>
+
+    <label for="category">카테고리:</label>
+    <input type="text" id="category" name="category" required>
+
+    <label for="image">이미지:</label>
+    <input type="text" id="image" name="image" value="https://via.placeholder.com/150" required>
+
+    <label for="ratingRate">평점:</label>
+    <input type="number" id="ratingRate" name="rating_rate" step="0.1" min="0" max="5" required>
+
+    <label for="ratingCount">평점 수:</label>
+    <input type="number" id="ratingCount" name="rating_count" required>
+
+    <button type="submit">추가</button>
+</form>
+
+<script>
+    $("#product-form").submit(function (event){
+        event.preventDefault();
+        $.ajax({
+            url:"/api/products/insert",
+            method:"POST",
+            contentType: "application/json",
+            data: JSON.stringify({
+                title: $("#title").val(),
+                price: $("#price").val(),
+                description: $("#description").val(),
+                category: $("#category").val(),
+                image: $("#image").val(),
+                ratingRate: $("#ratingRate").val(),
+                ratingCount: $("#ratingCount").val()
+            }),
+            success:
+            function (){
+                alert("상품 추가가 완료되었습니다.");
+                window.location.href = "/";
+            },
+            error:
+                function (error){
+                    console.log(error)
+                    alert("상품추가를 할 수 없습니다.")
+                }
+        })
+    })
+</script>
+</body>
+</html>
