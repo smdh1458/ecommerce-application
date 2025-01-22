@@ -33,6 +33,11 @@ public class ViewController {
         return "cart";
     }
 
+    @GetMapping("/user/{id}")
+    public String getUserById() {
+        return "user_detail";
+    }
+
     // 회원가입 페이지 볼 수 있게 회원가입.html 불러오기
     @GetMapping("/join")
     public String joinPage() {
@@ -44,13 +49,11 @@ public class ViewController {
         return "insertProduct";
     }
 
-    @GetMapping("/users{id}")
-    public String getUserId(@PathVariable("id") int id) {
-        return "user_detail";
-    }
+
 
     @GetMapping("/product/{id}")
     public String getProductById(@PathVariable("id") int id) {
+        System.out.println("product id : " + id);
         return "product_detail";
     }
 }

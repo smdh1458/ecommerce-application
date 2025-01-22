@@ -12,9 +12,11 @@
 <h1>사용자 목록</h1>
 <div id="user-container"></div>
 <script>
+    const apiURL = new URLSearchParams(window.location.search);
+    const id = apiURL.get("id");
     $(document).ready(function () {
             $.ajax({
-                url: '/api/users',
+                url: "/api/users",
                 method: 'GET',
                 success:
                     function(data){
@@ -25,7 +27,7 @@
                                 <h3>${value.lastname} ${value.firstname}</h3>
                                     <p>${value.phone}</p>
                                 <a href="/cart?userId=${value.id}">장바구니 확인하기</a><br>
-                                <a href="/users?id=${value.id}">정보 확인하기</a>
+                                <a href="/users?userId=${value.id}">정보 확인하기</a>
                             <div>`)
                         })
                     },

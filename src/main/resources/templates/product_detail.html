@@ -11,7 +11,27 @@
 <h1>상품 상세 정보</h1>
 <div id="product-detail-container"></div>
 <script>
-
+    const apiUrl = new URLSearchParams(window.location.search);
+    const id = apiUrl.get("id");
+    console.log("id: "+id);
+    $.ajax({
+        url:`/api/product?id=${id}`,
+        method:"GET",
+        success:
+            function (data){
+                $("#product-detail-container").html(`
+                    <img src="${data.image}">
+                    <p>${data.title}</p>
+                    <p>${data.price}</p>
+                    <p>${data.description}</p>
+                    <p>${data.category}</p>
+                `)
+            },
+        error:
+            function (){
+                $("##product-detail-container").html("<p>데이터를 불러오는데 실패했습니다.</p>");
+            }
+    })
 </script>
 </body>
 </html>

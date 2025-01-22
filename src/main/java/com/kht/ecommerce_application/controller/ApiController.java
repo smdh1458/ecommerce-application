@@ -66,14 +66,13 @@ public class ApiController {
         productService.insertProduct(product);
     }
 
-    @GetMapping("/api/users/{id}")
-    public User getUserId(@PathVariable("id") int id) {
-        log.info("get user id: {}", id);
+    @GetMapping("/api/user/{userId}")
+    public User getUserId(@RequestParam("userId") int id) {
         return userService.getUserId(id);
     }
 
-    @GetMapping("/api/product/productId")
-    public int getProductId() {
-        return 0;
+    @GetMapping("/api/product")
+    public Product getProductId(@RequestParam("id")int id) {
+        return productService.getProductById(id);
     }
 }
