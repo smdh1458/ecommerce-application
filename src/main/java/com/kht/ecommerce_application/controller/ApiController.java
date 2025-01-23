@@ -66,13 +66,13 @@ public class ApiController {
         productService.insertProduct(product);
     }
 
-    @GetMapping("/api/user/{userId}")
+    @GetMapping("/api/user")
     public User getUserId(@RequestParam("userId") int id) {
         return userService.getUserId(id);
     }
 
-    @GetMapping("/api/product")
-    public Product getProductId(@RequestParam("id")int id) {
+    @GetMapping("/api/product/{productId}")
+    public Product getProductId(@RequestParam("productId")int id) {
         return productService.getProductById(id);
     }
 }

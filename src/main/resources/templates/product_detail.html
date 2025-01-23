@@ -15,7 +15,7 @@
     const id = apiUrl.get("id");
     console.log("id: "+id);
     $.ajax({
-        url:`/api/product?id=${id}`,
+        url:`/api/product/${id}`,
         method:"GET",
         success:
             function (data){

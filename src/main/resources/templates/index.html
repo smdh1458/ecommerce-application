@@ -27,12 +27,12 @@
                                 <h3>${value.lastname} ${value.firstname}</h3>
                                     <p>${value.phone}</p>
                                 <a href="/cart?userId=${value.id}">장바구니 확인하기</a><br>
-                                <a href="/users?userId=${value.id}">정보 확인하기</a>
+                                <a href="/user${value.id}">정보 확인하기</a>
                             <div>`)
                         })
                     },
                 error: function () {
-                    $("user-container").append(`<p>서버에서 데이터를 가져올 수 없습니다.`);
+                    $("user-container").append(`<p>서버에서 데이터를 가져올 수 없습니다.</p>`);
                 }
         })
     })

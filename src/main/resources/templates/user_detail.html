@@ -11,9 +11,12 @@
 <h1>사용자 상세 정보</h1>
 <div id="user-detail-container"></div>
 <script>
-    const userId = new URLSearchParams(window.location.search).get('userId');
+    const Api = new URLSearchParams(window.location.search)
+    const userId = Api.get("id");
+    console.log("userId:" + userId);
+    console.log("api:" + Api);
     $.ajax({
-        url: "/api/users/"+userId,
+        url: `/api/user?userId=${userId}`,
         method:"GET",
         success:
             function (data){

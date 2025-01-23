@@ -33,8 +33,9 @@ public class ViewController {
         return "cart";
     }
 
-    @GetMapping("/user/{id}")
-    public String getUserById() {
+    @GetMapping("/user{id}")
+    public String getUserById(@PathVariable("id")int id) {
+        System.out.println("id:"+id);
         return "user_detail";
     }
 
