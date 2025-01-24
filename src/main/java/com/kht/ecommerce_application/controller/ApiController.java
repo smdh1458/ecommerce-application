@@ -66,13 +66,16 @@ public class ApiController {
         productService.insertProduct(product);
     }
 
-    @GetMapping("/api/user")
-    public User getUserId(@RequestParam("userId") int id) {
+    @GetMapping("/api/user/{userId}")
+    public User getUserId(@PathVariable("userId") int id) {
         return userService.getUserId(id);
     }
 
-    @GetMapping("/api/product/{productId}")
-    public Product getProductId(@RequestParam("productId")int id) {
+    @GetMapping("/api/product/{id}")
+    public Product getProductId(@PathVariable("id") int id) {
         return productService.getProductById(id);
+        // DB에서 가져온 데이터를 front-end로 전달
     }
+
+
 }

@@ -26,4 +26,9 @@ public class ProductServiceImpl implements ProductService {
     public Product getProductById(int id) {
         return productMapper.getProductById(id);
     }
+
+    @Override
+    public void updateProduct(Product product) {
+        productMapper.updateProduct(product);
+    }
 }

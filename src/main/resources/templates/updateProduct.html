@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>제품 수정</title>
+    <link href="/favicon.ico" rel="icon">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <link href="/styles.css" rel="stylesheet">
+</head>
+<body>
+<h1>제품 수정</h1>
+<form id="product-form">
+    <label for="title">제목:</label>
+    <input type="text" id="title" name="title" required>
+
+    <label for="price">가격:</label>
+    <input type="number" id="price" name="price" required>
+
+    <label for="description">설명:</label>
+    <textarea id="description" name="description" required></textarea>
+
+    <label for="category">카테고리:</label>
+    <input type="text" id="category" name="category" required>
+
+    <label for="image">이미지:</label>
+    <input type="text" id="image" name="image" value="https://via.placeholder.com/150" required>
+
+    <label for="ratingRate">평점:</label>
+    <input type="number" id="ratingRate" name="rating_rate" step="0.1" min="0" max="5" required>
+
+    <label for="ratingCount">평점 수:</label>
+    <input type="number" id="ratingCount" name="rating_count" required>
+
+    <button type="submit">수정하기</button>
+</form>
+
+<script>
+    //1. 제품상세보기에 작성한 제품 불러오기 api
+    const apiUrl = new URLSearchParams(window.location.search);
+    const id = apiUrl.get("id");
+
+    $.ajax({
+        url: `/api/product/${id}`,
+        method: "GET",
+        success:
+            function (data) {
+                if (data) {
+                    $("#title").val(data.title);
+                    $("#price").val(data.price);
+                    $("#description").val(data.description);
+                    $("#category").val(data.category);
+                    $("#image").val(data.image);
+                    $("#ratingRate").val(data.ratingRate);
+                    $("#ratingCount").val(data.ratingCount);
+                }
+            },
+        error:
+            function () {
+                $("##product-detail-container").html("<p>데이터를 불러오는데 실패했습니다.</p>");
+            }
+    })
+    //2. 제품 수정하기 put api 사용
+    $("#product-form").on("submit",function (event){
+        event.preventDefault();
+
+        $.ajax({
+            url: `/api/update/${id}`,
+            method: "PUT",
+            contentType:"application/json",
+            data:JSON.stringify({
+                title:$("#title").val(),
+                price:$("#price").val(),
+                description:$("#description").val(),
+                category:$("#category").val(),
+                image:$("#image").val(),
+                ratingRate:$("#ratingRate").val(), //만약에 숫자값으로 들어가지 않을 경우 input 형변환 parseInt
+                ratingCount:$("#ratingCount").val()
+            }),
+            success:
+                function (data){
+                    alert("상품 수정 성공");
+                    window.location.href ="/products";
+                },
+            error:
+                function (){
+                    alert("데이터를 수정할 수 없습니다. 다시 시도해주세요.");
+                }
+        })
+    })
+</script>
+</body>
+</html>

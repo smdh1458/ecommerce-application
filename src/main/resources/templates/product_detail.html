@@ -20,11 +20,15 @@
         success:
             function (data){
                 $("#product-detail-container").html(`
-                    <img src="${data.image}">
+                    <h2>${data.id}</h2>
+                    <img src="${data.image}" style="width: 200px; height=200px">
                     <p>${data.title}</p>
                     <p>${data.price}</p>
                     <p>${data.description}</p>
                     <p>${data.category}</p>
+                    <p>${data.ratingRate}</p>
+                    <p>${data.ratingCount}</p>
+                    <a href="/update/product?id=${data.id}">수정하기</a>
                 `)
             },
         error:

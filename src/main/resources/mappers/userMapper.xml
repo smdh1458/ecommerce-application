@@ -19,7 +19,7 @@
     </select>
 
     <select id="getUserId">
-        SELECT id, firstname, lastname, email, phone, address
+        SELECT *
         FROM users
         WHERE id = #{id}
     </select>

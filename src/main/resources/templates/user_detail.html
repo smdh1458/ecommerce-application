@@ -16,23 +16,21 @@
     console.log("userId:" + userId);
     console.log("api:" + Api);
     $.ajax({
-        url: `/api/user?userId=${userId}`,
+        url: `/api/user/${userId}`,
         method:"GET",
         success:
             function (data){
                 $("#user-detail-container").html(`
-                    <p>${data.email}</p>
-                    <p>${data.username}</p>
-                    <p>${data.password}</p>
-                    <p>${data.firstname}</p>
-                    <p>${data.lastname}</p>
-                    <p>${data.phone}</p>
-                    <p>${data.city}</p>
-                    <p>${data.street}</p>
-                    <p>${data.streetNumber}</p>
-                    <p>${data.zipcode}</p>
-                    <p>${data.geolocationLat}</p>
-                    <p>${data.geolocationLong}</p>
+                    <p>이메일: ${data.email}</p>
+                    <p>닉네임: ${data.username}</p>
+                    <p>비밀번호: ${data.password}</p>
+                    <p>이름: ${data.firstname}</p>
+                    <p>성: ${data.lastname}</p>
+                    <p>전화번호: ${data.phone}</p>
+                    <p>사는 곳: ${data.city}</p>
+                    <p>도로: ${data.street}</p>
+                    <p>도로 번호: ${data.streetNumber}</p>
+                    <p>우편번호: ${data.zipcode}</p>
                 `)
             },
         error:

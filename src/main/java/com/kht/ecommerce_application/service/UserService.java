@@ -1,9 +1,11 @@
 package com.kht.ecommerce_application.service;
 
 import com.kht.ecommerce_application.dto.User;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public interface UserService {
     List<User> getAllUser();
 

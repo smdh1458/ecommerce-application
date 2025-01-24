@@ -13,8 +13,21 @@
     </insert>
 
     <select id="getProductById">
-        SELECT id, title, price, description, category, image
+        SELECT *
         FROM products
         WHERE id = #{id}
     </select>
+
+    <update id="updateProduct">
+        UPDATE Products
+        SET
+            title=#{title},
+            price = #{price},
+            description = #{description},
+            category = #{category},
+            image = #{image},
+            rating_rate = #{ratingRate},
+            rating_count = #{ratingCount}
+        WHERE id = #{id}
+    </update>
 </mapper>
