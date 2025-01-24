@@ -1,5 +1,6 @@
 package com.kht.ecommerce_application.controller;
 
+import com.kht.ecommerce_application.dto.Book;
 import com.kht.ecommerce_application.dto.Cart;
 import com.kht.ecommerce_application.dto.Product;
 import com.kht.ecommerce_application.dto.User;
@@ -9,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 
 @Slf4j
 @RestController
@@ -21,6 +20,8 @@ public class ApiController {
     private ProductServiceImpl productService;
     @Autowired
     private CartServiceImpl cartService;
+    @Autowired
+    private BookServiceImpl bookService;
 
     @GetMapping("/api/users")
     public List<User> getUsers() {
@@ -85,6 +86,11 @@ public class ApiController {
     public Product getProductId(@PathVariable("id") int id) {
         return productService.getProductById(id);
         // DB에서 가져온 데이터를 front-end로 전달
+    }
+
+    @GetMapping("/api/books")
+    public List<Book> getBooks() {
+        return bookService.getAllBooks();
     }
 
 

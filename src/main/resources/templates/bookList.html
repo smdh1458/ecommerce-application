@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>책 목록</title>
+    <link rel="stylesheet" href="book-styles.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <h1 class="title">책 목록</h1>
+    <table class="book-table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>제목</th>
+            <th>저자</th>
+            <th>장르</th>
+            <th>이미지</th>
+        </tr>
+        </thead>
+        <tbody id="book-list">
+
+        </tbody>
+    </table>
+</div>
+
+<script>
+    $.ajax({
+        url: "/api/books",
+        method: "GET",
+        success:
+            function (data) {
+                $.each(data, function (index, value) {
+                    $("#book-list").append(`
+                            <tr>
+                                <td>${value.id}</td>
+                                <td>${value.title}</td>
+                                <td>${value.author}</td>
+                                <td>${value.genre}</td>
+                                <td><img src="${value.imagePath}" alt="이미지 없음"></td>
+                            </tr>
+                        `);
+                })
+            }
+    })
+</script>
+</body>
+</html>
