@@ -14,4 +14,6 @@ public interface UserService {
     Boolean existByEmail(String email);
 
     User getUserId(int id);
+
+    void editUser(User user);
 }

@@ -23,4 +23,18 @@
         FROM users
         WHERE id = #{id}
     </select>
+
+    <select id="editUser">
+        UPDATE users
+        SET
+            email=#{email},
+            phone=#{phone},
+            city=#{city},
+            street=#{street},
+            street_number=#{streetNumber},
+            zipcode=#{zipcode},
+            geolocation_lat=#{geolocationLat},
+            geolocation_long=#{geolocationLong}
+        WHERE id = #{id}
+    </select>
 </mapper>

@@ -66,11 +66,21 @@ public class ApiController {
         productService.insertProduct(product);
     }
 
+    //id로 유저 정보 가져오기
     @GetMapping("/api/user/{userId}")
     public User getUserId(@PathVariable("userId") int id) {
         return userService.getUserId(id);
     }
 
+    //id로 유저 정보 사용자 수정하기
+    @PutMapping("/api/user/edit/{userId}") // @PathVariable = 특정사용자 데이터를 주고받는 장소  @Request = 데이터를 통째로 전달받거나, 일부분만 전달받아서 사용하거나 전달
+    public void editUser(@PathVariable("userId") int userId, @RequestBody User user) {
+        user.setId(userId); //수정하기 주소에 존재하는 유저 아이디를 가져와서 User DTO에 넣어주고, mapper.xml where id에서 넣어준 id를 사용할 수 있음
+        userService.editUser(user);
+    }
+
+
+    //id로 제품정보 가져오기
     @GetMapping("/api/product/{id}")
     public Product getProductId(@PathVariable("id") int id) {
         return productService.getProductById(id);
