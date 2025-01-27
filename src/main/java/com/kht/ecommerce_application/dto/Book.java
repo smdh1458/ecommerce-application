@@ -14,9 +14,9 @@ import lombok.*;
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
-    String title;
-    String author;
-    String genre;
-    String imagePath;
+    private int id;
+    private String title;
+    private String author;
+    private String genre;
+    private String imagePath;
 }

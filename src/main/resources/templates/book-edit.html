@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>책 수정하기</title>
+    <link rel="stylesheet" href="/book-styles.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <h1 class="title">책 수정하기</h1>
+    <form id="edit-form" class="edit-form">
+        <label for="title">제목:</label>
+        <input type="text" id="title" name="title" required>
+
+        <label for="author">저자:</label>
+        <input type="text" id="author" name="author" required>
+
+        <label for="genre">장르:</label>
+        <input type="text" id="genre" name="genre" required>
+
+        <div class="image-preview-container">
+            <label for="imagePath">이미지 선택:</label>
+            <input type="file" id="imagePath" accept="image/*">
+            <div class="image-preview" id="imagePreview">
+                <span>미리보기 이미지가 여기에 표시됩니다.</span>
+            </div>
+        </div>
+
+        <button type="submit" class="btn">수정 완료</button>
+    </form>
+</div>
+<script>
+
+    const bookId = new URLSearchParams(window.location.search).get("id");
+    //책 상세보기 api이용해서 데이터 가져오기
+    $.ajax({
+        url: `/api/books/${bookId}`,
+        method: "GET",
+        success: function (data) {
+            $("#title").val(data.title);
+            $("#author").val(data.author);
+            $("#genre").val(data.genre);
+        },
+        error:
+            function () {
+                alert("데이터를 로드하는데 실패했습니다.");
+            }
+    });
+
+    //put 책 정보 수정
+    $("#edit-form").submit(function (e) {
+        e.preventDefault();
+        let title = $("#title").val()
+        let author = $("#author").val()
+        let genre = $("#genre").val()
+        let formData = new FormData();
+        formData.append("title",title);
+        formData.append("author",author);
+        formData.append("genre",genre);
+        formData.append("file",$("#imagePath")[0].files[0]);
+
+        $.ajax({
+            url: `/api/books/${bookId}/update`, //bookId = ?가 아니므로, 주소에서 /사이에 작성할 수 있음
+            method: "PUT", // post 로 데이터가 수정이 되긴 하지만 restFul 개념에 어긋나기 때문에 put 수정
+            // formData -> controller data send
+            processData: false,
+            contentType: false,
+            data: formData,
+            success:
+                function (){
+                    alert("책 정보 수정 성공");
+                    window.location.href=`/books?id=${bookId}`;
+                },
+            error:
+                function (error){
+                    console.log("data: "+ error);
+                    alert("책 정보를 수정하는데 실패했습니다.");
+                }
+
+        });
+    });
+
+     /*
+    //javascript -> jquery 수정
+    $("#imagePath").on("change" ,function (event){
+        const file = event.target.files[0];
+        const preview = $("#imagePreview");
+        preview.empty();
+
+        if (file && file.type.startsWith("image/")) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const img = $("#image").attr("src", e.target.result).attr("alt")
+                img.src = e.target.result;
+                img.alt = "미리보기 이미지";
+                img.style.maxWidth = "100%";
+                img.style.maxHeight = "300px";
+                preview.appendChild(img);
+            };
+            reader.readAsDataURL(file);
+        } else {
+            preview.innerHTML = "<span>지원하지 않는 파일 형식입니다.</span>";
+        }
+    });
+
+     */
+</script>
+</body>
+</html>

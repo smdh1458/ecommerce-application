@@ -73,14 +73,5 @@ public class ViewController {
         return "updateProduct";
     }
 
-    @GetMapping("/book")
-    public String bookPage() {
-        return "bookList";
-    }
-
-    @GetMapping("/books/{id}")
-    public String getBookById(@PathVariable("id") int id) {
-        return "book-detail";
-    }
 
 }

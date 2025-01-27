@@ -20,8 +20,6 @@ public class ApiController {
     private ProductServiceImpl productService;
     @Autowired
     private CartServiceImpl cartService;
-    @Autowired
-    private BookServiceImpl bookService;
 
     @GetMapping("/api/users")
     public List<User> getUsers() {
@@ -85,13 +83,6 @@ public class ApiController {
     @GetMapping("/api/product/{id}")
     public Product getProductId(@PathVariable("id") int id) {
         return productService.getProductById(id);
-        // DB에서 가져온 데이터를 front-end로 전달
+        // DB 에서 가져온 데이터를 front-end로 전달
     }
-
-    @GetMapping("/api/books")
-    public List<Book> getBooks() {
-        return bookService.getAllBooks();
-    }
-
-
 }

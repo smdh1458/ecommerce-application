@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>책 상세보기</title>
+    <link rel="stylesheet" href="/book-styles.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <h1 class="title">책 상세보기</h1>
+    <div id="book-detail" class="book-detail">
+    </div>
+
+</div>
+<script>
+    // bookId 를 url 주소에서 id에 해당하는 값이 있는지 확인(=검색) 하고, 존재하는 값을 가져와서 사용
+    const bookId = new URLSearchParams(window.location.search).get("id");
+    $.ajax({
+        url: `/api/books/${bookId}`,
+        method: "GET",
+        success: function (book) {
+            $("#book-detail").html(`
+                        <p><strong>이미지: </strong><img class="book-image" src="${book.imagePath ? book.imagePath : "/images/defaultImg.png"}"> </p>
+                        <p><strong>제목: </strong>${book.title} </p>
+                        <p><strong>저자: </strong>${book.author} </p>
+                        <p><strong>장르: </strong>${book.genre} </p>
+                        <!-- URLSearchParams에서 가져온 id 값으로 해당하는 데이터 수정경로 설정-->
+                        <a class="btn"  id="edit-btn" href="/books/update?id=${bookId}" >수정하기</a>
+                        <p><a class="btn" id="delete-btn">삭제하기</a></p>
+                    `);
+        },
+        error:
+            function () {
+                $("#book-detail").html("<p>이미지를 불러오는데 실패했습니다.</p>")
+            }
+    });
+
+    //body 태그 내에서 html 태그로 직접적으로 작성하지 않은 태그는
+    // 아래와 같이 작성할 경우 동작하지 XX
+    //$("#delete-btn").click(function () {}; --> script 태그 안에서 만들어진 html 취급 X
+    $(document).on("click", "#delete-btn", function () {
+        if (confirm("정말로 삭제하시겠습니까?")) {
+            $.ajax({
+                url: `/api/delete/${bookId}`, //삭제 주소 url
+                method: "DELETE",
+                success:
+                    function () {
+                        alert("책이 성공적으로 삭제되었습니다.");
+                        window.location.href = "/books";
+                    },
+                error:
+                    function () {
+                        alert("지금은 삭제를 할 수 없습니다.");
+                    }
+            })
+        }
+    });
+</script>
+</body>
+</html>

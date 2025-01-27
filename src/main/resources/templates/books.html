@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>책 목록</title>
+    <link rel="stylesheet" href="book-styles.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <h1 class="title">책 목록</h1>
+    <table class="book-table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>제목</th> <!-- 책 제목 클릭하면 책 상세보기 이동 -->
+            <th>저자</th>
+            <th>장르</th>
+            <th>이미지</th>
+        </tr>
+        </thead>
+        <tbody id="book-list">
+
+        </tbody>
+    </table>
+</div>
+
+<script>
+    $.ajax({
+        /*
+        * HTTP Status 404 - Not Found
+        * frontend 에서 문제가아니라
+        * json WEB - controller - db 서로 상호작용 XXX
+        *
+        * 컴퓨터는 /books 로 템플릿을 읽기 때문에 경로 충돌 발생
+        * */
+        url: "/api/bookList",
+        method: "GET",
+        success:
+            function (data) {
+            // data = List KHTBook 배열 형태로 들어있는 상태
+            //    [{id: 1 , author: 책저자1, title:책제목1, genre:장르1, imagePath: 이미지경로1}]
+            //    [{id: 2 , author: 책저자2, title:책제목2, genre:장르2, imagePath: 이미지경로2}]
+            //    [{id: 3 , author: 책저자3, title:책제목3, genre:장르3, imagePath: 이미지경로3}]
+            //    [{id: 4 , author: 책저자4, title:책제목4, genre:장르4, imagePath: 이미지경로4}]
+            // 배열 (리스트) 형태로 되어있는 값을 each문을 활용해서 하나씩 가져오기
+            // index = 가져온 순서
+            // value = 목록 형태로 되어있는 KHTBook 을 하나씩 꺼내서 가져온 상태
+            // 데이터를 배열 = 목록 형태로 가져오기 때문에 for-each문을 사용해서 데이터 하나씩 출력
+                $.each(data, function (index, value) {
+                    $("#book-list").append(`
+                            <tr>
+                                <td>${value.id}</td>
+                                <td><a href="/books?id=${value.id}"> ${value.title}</a></td>
+                                <td>${value.author}</td>
+                                <td>${value.genre}</td>
+                                <!-- 이미지가 존재하지 않을 경우 데체 이미지로 설정 대체 이미지 defaultImg.png 대체
+                                삼항 연산자 사용-->
+                                <td><img class=book-image src="${value.imagePath ? value.imagePath : "/images/defaultImg.png"} " alt="이미지 없음" ></td>
+                            </tr>
+                        `);
+                })
+            },
+        error:
+            function (){ // ajax - controller 에서 데이터를 가지고 오지 못할 때
+                $("#book-list").html("<p> 서버에 문제가 생겼습니다. 고객센터로 문의 바랍니다.</p>");
+            }
+    })
+</script>
+</body>
+</html>
