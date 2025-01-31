@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Title</title>
+    <link rel="icon" href="/favicon.ico">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+<button id="kakaoLogin">카카오 로그인</button>
+<script>
+    $("#kakaoLogin").click(function (){
+        $.ajax({
+            //kakaoLogin 버튼을 클릭했을 때 카카오톡 주소로 로그인 요청을 보내는 url 주소 설정 get
+            url:"/oauth/kakao/login", //kakao로 전달받은 url 로그인 주고받기
+            method:"GET",
+            success:
+                function (data){
+                    window.location.href=data;
+                },
+            error:
+                function (data){
+                    console.log(data);
+                }
+        })
+    })
+</script>
+</body>
+</html>

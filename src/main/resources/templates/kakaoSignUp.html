@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Title</title>
+    <link rel="icon" href="/favicon.ico">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+    <title>회원가입</title>
+    <form>
+        <label>닉네임: </label>
+        <input type="text" name="nickname" th:value="${nickname}">
+
+        <label>이름: </label>
+        <input type="text" name="kakao">
+
+        <label>이메일: </label>
+        <input type="email" name="email" th:value="${email}" disabled>
+
+        <!-- img src th:src 카카오톡 이미지 가져오기-->
+        <button>가입하기</button>
+    </form>
+</body>
+</html>
