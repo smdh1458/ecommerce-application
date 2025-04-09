@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.File;
+
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
@@ -82,6 +82,8 @@ public class KakaoAPIController {
 
         // 문서 / 도구>REST API 테스트>사용자 정보 가져오기
         Map userInfo = userResponse.getBody();
+        System.out.println("===============[Controller] - user info =================");
+        System.out.println(userInfo);
         Map<String, Object> properties = (Map<String, Object>) userInfo.get("properties");
         Map<String, Object> kakaoAccount = (Map<String, Object>) userInfo.get("kakao_account");
 
@@ -90,15 +92,16 @@ public class KakaoAPIController {
 
         String email = (String) kakaoAccount.get("email"); //현재는 이메일만 가져오도록 설정한 상태
 
-        File img = (File) properties.get("profile_image");
-        //한글 깨짐 방지
-        String encodedNickname = URLEncoder.encode(nickname, StandardCharsets.UTF_8);
+        String profileImage = (String) properties.get("profile_image");
+
+
+        String encodedNickname = URLEncoder.encode(nickname, StandardCharsets.UTF_8);//한글 깨짐 방지
         
         //email의 경우 영어 + 숫자 형식 -> 변환할 필요 XX
         //String encodedEmail = URLEncoder.encode(email, StandardCharsets.UTF_8);
         
         // 키-값 받아오기 위해 키-값 시작  = ? 기호
         // 키-값 여러값 받아오고 전달할 경우 = & 기호로 키-값 다수 사용
-        return "redirect:/signup?nickname=" + encodedNickname + "&email=" + email;
+        return "redirect:/signup?nickname=" + encodedNickname + "&email=" + email + "&profileImage=" + profileImage;
     }
 }
